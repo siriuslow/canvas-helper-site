@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Successful — Canvas Helper</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px 24px;
+      max-width: 480px;
+    }
+
+    .checkmark {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: #888;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .highlight {
+      color: #c4b5fd;
+      font-weight: 600;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 12px 28px;
+      background: #7c3aed;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: #6d28d9; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="checkmark">✅</div>
+    <h1>Payment Successful!</h1>
+    <p>Your license key is on its way. <span class="highlight">Check your email</span> — it should arrive within a minute.</p>
+    <p>Paste the key into the Canvas Helper panel to activate your subscription.</p>
+    <p style="font-size:0.85rem; color:#555;">Didn't get an email? Check your spam folder or contact support.</p>
+    <a href="/" class="back-btn">Back to Home</a>
+  </div>
+</body>
+</html>
