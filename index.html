@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Helper — Pricing</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      margin-top: 12px;
+      font-size: 1.1rem;
+      color: #888;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 50px 0 20px;
+      color: #c4b5fd;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 0 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 30px 24px;
+      width: 200px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #7c3aed;
+    }
+
+    .card.popular {
+      border-color: #7c3aed;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #7c3aed;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .card .price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .card .price span {
+      font-size: 1rem;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .card .duration {
+      font-size: 0.85rem;
+      color: #666;
+      margin: 6px 0 20px;
+    }
+
+    .card button {
+      width: 100%;
+      padding: 12px;
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .card button:hover {
+      background: #6d28d9;
+    }
+
+    .card button:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+
+    /* Email modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 36px 32px;
+      width: 360px;
+      text-align: center;
+    }
+
+    .modal h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal p {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      outline: none;
+    }
+
+    .modal input:focus {
+      border-color: #7c3aed;
+    }
+
+    .modal .modal-btn {
+      width: 100%;
+      padding: 13px;
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .modal .modal-btn:hover { background: #6d28d9; }
+    .modal .modal-btn:disabled { background: #444; cursor: not-allowed; }
+
+    .modal .cancel-btn {
+      background: none;
+      border: none;
+      color: #666;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .modal .cancel-btn:hover { color: #aaa; }
+
+    .error-msg {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 20px 40px;
+      color: #444;
+      font-size: 0.85rem;
+    }
+
+    .features {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 10px;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Canvas Helper</h1>
+  <p>AI-powered Canvas assignment completion. Get your key instantly after purchase.</p>
+</header>
+
+<!-- STUDENT PLANS -->
+<div class="section-title">Student Plans</div>
+<div class="features">Personal use only &mdash; AI answers, auto-fill, and submission for one account.</div>
+<div class="cards" id="student-cards">
+
+  <div class="card">
+    <h3>Day Pass</h3>
+    <div class="price">$2.50</div>
+    <div class="duration">24 hours access</div>
+    <button onclick="openModal('student','day')">Get Access</button>
+  </div>
+
+  <div class="card">
+    <h3>Weekly</h3>
+    <div class="price">$10</div>
+    <div class="duration">7 days access</div>
+    <button onclick="openModal('student','week')">Get Access</button>
+  </div>
+
+  <div class="card popular">
+    <div class="popular-badge">Most Popular</div>
+    <h3>Monthly</h3>
+    <div class="price">$25</div>
+    <div class="duration">30 days access</div>
+    <button onclick="openModal('student','month')">Get Access</button>
+  </div>
+
+  <div class="card">
+    <h3>3 Months</h3>
+    <div class="price">$50</div>
+    <div class="duration">90 days access</div>
+    <button onclick="openModal('student','3month')">Get Access</button>
+  </div>
+
+  <div class="card">
+    <h3>Yearly</h3>
+    <div class="price">$100</div>
+    <div class="duration">365 days access</div>
+    <button onclick="openModal('student','year')">Get Access</button>
+  </div>
+
+</div>
+
+<!-- SERVICE PLANS -->
+<div class="section-title" style="margin-top:60px;">Service Plans</div>
+<div class="features">Up to 5 simultaneous accounts &mdash; built for shared or multi-account use.</div>
+<div class="cards" id="service-cards">
+
+  <div class="card">
+    <h3>Day Pass</h3>
+    <div class="price">$10</div>
+    <div class="duration">24 hours &bull; 5 accounts</div>
+    <button onclick="openModal('service','day')">Get Access</button>
+  </div>
+
+  <div class="card">
+    <h3>Weekly</h3>
+    <div class="price">$40</div>
+    <div class="duration">7 days &bull; 5 accounts</div>
+    <button onclick="openModal('service','week')">Get Access</button>
+  </div>
+
+  <div class="card popular">
+    <div class="popular-badge">Best Value</div>
+    <h3>Monthly</h3>
+    <div class="price">$120</div>
+    <div class="duration">30 days &bull; 5 accounts</div>
+    <button onclick="openModal('service','month')">Get Access</button>
+  </div>
+
+  <div class="card">
+    <h3>3 Months</h3>
+    <div class="price">$250</div>
+    <div class="duration">90 days &bull; 5 accounts</div>
+    <button onclick="openModal('service','3month')">Get Access</button>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2026 Canvas Helper &mdash; Your key is emailed instantly after payment.
+</footer>
+
+<!-- EMAIL MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>Enter your email</h2>
+    <p>Your license key will be sent here immediately after payment.</p>
+    <input type="email" id="email-input" placeholder="you@email.com" />
+    <div class="error-msg" id="error-msg">Please enter a valid email.</div>
+    <button class="modal-btn" id="checkout-btn" onclick="startCheckout()">Continue to Payment</button>
+    <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<script>
+  const API = "https://canvas-helper-api-production.up.railway.app";
+  let selectedType = null;
+  let selectedTier = null;
+
+  function openModal(type, tier) {
+    selectedType = type;
+    selectedTier = tier;
+    document.getElementById('email-input').value = '';
+    document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('checkout-btn').disabled = false;
+    document.getElementById('checkout-btn').textContent = 'Continue to Payment';
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  async function startCheckout() {
+    const email = document.getElementById('email-input').value.trim();
+    const errorMsg = document.getElementById('error-msg');
+    const btn = document.getElementById('checkout-btn');
+
+    if (!email || !email.includes('@')) {
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    errorMsg.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Redirecting...';
+
+    try {
+      const res = await fetch(`${API}/create-checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key_type: selectedType, tier: selectedTier, email })
+      });
+
+      const data = await res.json();
+
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url;
+      } else {
+        errorMsg.textContent = 'Something went wrong. Please try again.';
+        errorMsg.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Continue to Payment';
+      }
+    } catch (e) {
+      errorMsg.textContent = 'Could not connect to server. Try again later.';
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Continue to Payment';
+    }
+  }
+
+  // Close modal on overlay click
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+
+</body>
+</html>
