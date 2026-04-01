@@ -4,73 +4,352 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Canvas Helper — Pricing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #161616;
+      --border: #222222;
+      --border-hover: #444444;
+      --text: #ffffff;
+      --text-muted: #a0a0a0;
+      --text-faint: #555555;
+      --accent: #7c3aed;
+      --accent-hover: #6d28d9;
+      --accent-light: #c4b5fd;
+      --btn-bg: #ffffff;
+      --btn-text: #0a0a0a;
+      --btn-hover: #e5e5e5;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #0d0d0d;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      text-align: center;
-      padding: 60px 20px 20px;
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    header h1 {
-      font-size: 2.8rem;
+    .nav-logo {
+      font-size: 1.1rem;
       font-weight: 800;
-      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent-light);
+    }
+
+    .nav-cta {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .nav-cta:hover { background: var(--btn-hover); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      color: var(--accent-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #7c3aed, #a855f7, #c084fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    header p {
-      margin-top: 12px;
-      font-size: 1.1rem;
-      color: #888;
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .section-title {
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin: 50px 0 20px;
-      color: #c4b5fd;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .cards {
+    .hero-actions {
       display: flex;
-      flex-wrap: wrap;
+      gap: 12px;
       justify-content: center;
-      gap: 20px;
-      padding: 0 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 10px;
+      padding: 14px 28px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--btn-hover); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-hover);
+      border-radius: 10px;
+      padding: 14px 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover { border-color: #888; color: var(--text); }
+
+    /* ── TRUST BADGES ── */
+    .trust-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .trust-item .icon {
+      font-size: 1.1rem;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
       max-width: 1100px;
       margin: 0 auto;
+      padding: 80px 20px;
     }
 
-    .card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 30px 24px;
-      width: 200px;
+    .section-label {
       text-align: center;
-      transition: transform 0.2s, border-color 0.2s;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 56px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--surface);
+      padding: 36px 28px;
       position: relative;
     }
 
+    .step-num {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--border-hover);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .feature-item {
+      background: var(--surface);
+      padding: 32px 28px;
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .feature-item h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .feature-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── PRICING ── */
+    #pricing { padding-top: 80px; }
+
+    .plan-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+
+    .plan-toggle button {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+      border: 1px solid var(--border-hover);
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .plan-toggle button.active {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border-color: var(--btn-bg);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 22px;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
     .card:hover {
-      transform: translateY(-4px);
-      border-color: #7c3aed;
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
     }
 
     .card.popular {
-      border-color: #7c3aed;
+      border-color: var(--accent);
+      background: linear-gradient(160deg, #111111 0%, #160d24 100%);
     }
 
     .popular-badge {
@@ -78,254 +357,530 @@
       top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      background: #7c3aed;
+      background: var(--accent);
       color: #fff;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 20px;
-      letter-spacing: 1px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .card h3 {
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: #ccc;
-      margin-bottom: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
     }
 
     .card .price {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .card .price span {
-      font-size: 1rem;
-      color: #888;
-      font-weight: 400;
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--text);
+      line-height: 1;
     }
 
     .card .duration {
-      font-size: 0.85rem;
-      color: #666;
+      font-size: 0.8rem;
+      color: var(--text-faint);
       margin: 6px 0 20px;
+    }
+
+    .card-features {
+      list-style: none;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .card-features li {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: var(--accent-light);
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
     }
 
     .card button {
       width: 100%;
       padding: 12px;
-      background: #7c3aed;
-      color: #fff;
+      background: var(--btn-bg);
+      color: var(--btn-text);
       border: none;
       border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: 'Inter', sans-serif;
+      margin-top: auto;
+    }
+
+    .card button:hover { background: var(--btn-hover); }
+    .card button:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+    .plan-section { display: none; }
+    .plan-section.active { display: block; }
+
+    /* ── FAQ ── */
+    .faq-list {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
       font-size: 0.95rem;
       font-weight: 600;
+      text-align: left;
+      padding: 22px 0;
       cursor: pointer;
-      transition: background 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
     }
 
-    .card button:hover {
-      background: #6d28d9;
+    .faq-question:hover { color: var(--accent-light); }
+
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--text-faint);
+      transition: transform 0.2s;
+      flex-shrink: 0;
     }
 
-    .card button:disabled {
-      background: #444;
-      cursor: not-allowed;
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent-light); }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 20px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
     }
 
-    /* Email modal */
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ── MODAL ── */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0, 0, 0, 0.8);
       z-index: 100;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(4px);
     }
 
-    .modal-overlay.open {
-      display: flex;
-    }
+    .modal-overlay.open { display: flex; }
 
     .modal {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 36px 32px;
-      width: 360px;
+      background: var(--surface2);
+      border: 1px solid var(--border-hover);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 380px;
+      max-width: calc(100vw - 40px);
       text-align: center;
     }
 
     .modal h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.4rem;
+      font-weight: 800;
       margin-bottom: 8px;
+      letter-spacing: -0.5px;
     }
 
     .modal p {
-      color: #888;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
     }
 
     .modal input {
       width: 100%;
-      padding: 12px 16px;
-      background: #111;
-      border: 1px solid #333;
+      padding: 13px 16px;
+      background: #0d0d0d;
+      border: 1px solid var(--border-hover);
       border-radius: 10px;
-      color: #fff;
+      color: var(--text);
       font-size: 0.95rem;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       outline: none;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.15s;
     }
 
-    .modal input:focus {
-      border-color: #7c3aed;
-    }
+    .modal input:focus { border-color: var(--accent); }
 
     .modal .modal-btn {
       width: 100%;
-      padding: 13px;
-      background: #7c3aed;
-      color: #fff;
+      padding: 14px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
       border: none;
       border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
       margin-bottom: 10px;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.15s;
     }
 
-    .modal .modal-btn:hover { background: #6d28d9; }
-    .modal .modal-btn:disabled { background: #444; cursor: not-allowed; }
+    .modal .modal-btn:hover { background: var(--btn-hover); }
+    .modal .modal-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
 
     .modal .cancel-btn {
       background: none;
       border: none;
-      color: #666;
-      font-size: 0.9rem;
+      color: var(--text-faint);
+      font-size: 0.85rem;
       cursor: pointer;
-      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+      transition: color 0.15s;
     }
 
-    .modal .cancel-btn:hover { color: #aaa; }
+    .modal .cancel-btn:hover { color: var(--text-muted); }
 
     .error-msg {
       color: #f87171;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       margin-bottom: 10px;
       display: none;
+      text-align: left;
     }
 
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── FOOTER ── */
     footer {
       text-align: center;
-      padding: 60px 20px 40px;
-      color: #444;
-      font-size: 0.85rem;
+      padding: 48px 20px;
+      color: var(--text-faint);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
     }
 
-    .features {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 10px;
-      color: #666;
-      font-size: 0.9rem;
-      line-height: 1.8;
+    footer a {
+      color: var(--text-faint);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--text-muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .trust-bar { gap: 20px; }
+      .cards { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Canvas Helper</h1>
-  <p>AI-powered Canvas assignment completion. Get your key instantly after purchase.</p>
-</header>
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">Canvas<span>Helper</span></a>
+  <button class="nav-cta" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Access</button>
+</nav>
 
-<!-- STUDENT PLANS -->
-<div class="section-title">Student Plans</div>
-<div class="features">Personal use only &mdash; AI answers, auto-fill, and submission for one account.</div>
-<div class="cards" id="student-cards">
-
-  <div class="card">
-    <h3>Day Pass</h3>
-    <div class="price">$2.50</div>
-    <div class="duration">24 hours access</div>
-    <button onclick="openModal('student','day')">Get Access</button>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">AI-Powered Canvas Automation</div>
+  <h1>Complete Canvas Assignments <em>on Autopilot</em></h1>
+  <p>AI-generated answers, auto-fill, and automatic submission. Activate in seconds with a license key.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-primary" onclick="event.preventDefault();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Started</a>
+    <a href="#how-it-works" class="btn-secondary" onclick="event.preventDefault();document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">How it works</a>
   </div>
+</section>
 
-  <div class="card">
-    <h3>Weekly</h3>
-    <div class="price">$10</div>
-    <div class="duration">7 days access</div>
-    <button onclick="openModal('student','week')">Get Access</button>
-  </div>
-
-  <div class="card popular">
-    <div class="popular-badge">Most Popular</div>
-    <h3>Monthly</h3>
-    <div class="price">$25</div>
-    <div class="duration">30 days access</div>
-    <button onclick="openModal('student','month')">Get Access</button>
-  </div>
-
-  <div class="card">
-    <h3>3 Months</h3>
-    <div class="price">$50</div>
-    <div class="duration">90 days access</div>
-    <button onclick="openModal('student','3month')">Get Access</button>
-  </div>
-
-  <div class="card">
-    <h3>Yearly</h3>
-    <div class="price">$100</div>
-    <div class="duration">365 days access</div>
-    <button onclick="openModal('student','year')">Get Access</button>
-  </div>
-
+<!-- TRUST BADGES -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="icon">⚡</span> Instant Delivery</div>
+  <div class="trust-item"><span class="icon">🔒</span> Secure Checkout</div>
+  <div class="trust-item"><span class="icon">📧</span> Key via Email</div>
+  <div class="trust-item"><span class="icon">✅</span> Works Immediately</div>
 </div>
 
-<!-- SERVICE PLANS -->
-<div class="section-title" style="margin-top:60px;">Service Plans</div>
-<div class="features">Up to 5 simultaneous accounts &mdash; built for shared or multi-account use.</div>
-<div class="cards" id="service-cards">
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-label">The Process</div>
+  <h2 class="section-heading">Up and running in 3 steps</h2>
+  <p class="section-sub">No complicated setup. Just install, activate, and let Canvas Helper do the rest.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Install the Script</h3>
+      <p>Add the Canvas Helper userscript to Tampermonkey in your browser. Takes under a minute.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Enter Your Key</h3>
+      <p>Purchase a plan below. Your license key arrives by email instantly — paste it into the Canvas Helper panel.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Assignments Complete</h3>
+      <p>Open any Canvas assignment. The AI reads the question, generates an answer, and fills it in automatically.</p>
+    </div>
+  </div>
+</section>
 
-  <div class="card">
-    <h3>Day Pass</h3>
-    <div class="price">$10</div>
-    <div class="duration">24 hours &bull; 5 accounts</div>
-    <button onclick="openModal('service','day')">Get Access</button>
+<hr class="divider" />
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-label">What You Get</div>
+  <h2 class="section-heading">Everything you need</h2>
+  <p class="section-sub">Canvas Helper handles the entire assignment workflow from start to finish.</p>
+  <div class="features-grid">
+    <div class="feature-item">
+      <span class="feature-icon">🤖</span>
+      <h3>AI-Generated Answers</h3>
+      <p>Routes each question to the best AI model — math, writing, multiple choice, and more.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">✍️</span>
+      <h3>Auto-Fill Submissions</h3>
+      <p>Answers are typed directly into Canvas fields and submitted automatically.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">⚡</span>
+      <h3>Instant Key Delivery</h3>
+      <p>Your license key is emailed the moment payment clears. No waiting.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🏫</span>
+      <h3>Works on All Schools</h3>
+      <p>Compatible with any Canvas LMS installation, regardless of your institution.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">👥</span>
+      <h3>Multi-Account Support</h3>
+      <p>Service plans cover up to 5 simultaneous accounts — perfect for shared use.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔐</span>
+      <h3>Secure & Private</h3>
+      <p>Your data stays private. Keys are encrypted and validated server-side.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-label">Pricing</div>
+  <h2 class="section-heading">Choose your plan</h2>
+  <p class="section-sub">One-time payment. No subscriptions. Key arrives in your inbox instantly.</p>
+
+  <div class="plan-toggle">
+    <button class="active" onclick="showPlan('student', this)">Student Plans</button>
+    <button onclick="showPlan('service', this)">Service Plans</button>
   </div>
 
-  <div class="card">
-    <h3>Weekly</h3>
-    <div class="price">$40</div>
-    <div class="duration">7 days &bull; 5 accounts</div>
-    <button onclick="openModal('service','week')">Get Access</button>
+  <!-- STUDENT PLANS -->
+  <div class="plan-section active" id="plan-student">
+    <p style="text-align:center;color:var(--text-faint);font-size:0.8rem;margin-bottom:28px;">Personal use only &mdash; one account</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Day Pass</h3>
+        <div class="price">$2.50</div>
+        <div class="duration">24 hours access</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>1 account</li>
+        </ul>
+        <button onclick="openModal('student','day')">Get Access</button>
+      </div>
+      <div class="card">
+        <h3>Weekly</h3>
+        <div class="price">$10</div>
+        <div class="duration">7 days access</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>1 account</li>
+        </ul>
+        <button onclick="openModal('student','week')">Get Access</button>
+      </div>
+      <div class="card popular">
+        <div class="popular-badge">Most Popular</div>
+        <h3>Monthly</h3>
+        <div class="price">$25</div>
+        <div class="duration">30 days access</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>1 account</li>
+        </ul>
+        <button onclick="openModal('student','month')">Get Access</button>
+      </div>
+      <div class="card">
+        <h3>3 Months</h3>
+        <div class="price">$50</div>
+        <div class="duration">90 days access</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>1 account</li>
+        </ul>
+        <button onclick="openModal('student','3month')">Get Access</button>
+      </div>
+      <div class="card">
+        <h3>Yearly</h3>
+        <div class="price">$100</div>
+        <div class="duration">365 days access</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>1 account</li>
+        </ul>
+        <button onclick="openModal('student','year')">Get Access</button>
+      </div>
+    </div>
   </div>
 
-  <div class="card popular">
-    <div class="popular-badge">Best Value</div>
-    <h3>Monthly</h3>
-    <div class="price">$120</div>
-    <div class="duration">30 days &bull; 5 accounts</div>
-    <button onclick="openModal('service','month')">Get Access</button>
+  <!-- SERVICE PLANS -->
+  <div class="plan-section" id="plan-service">
+    <p style="text-align:center;color:var(--text-faint);font-size:0.8rem;margin-bottom:28px;">Up to 5 simultaneous accounts &mdash; built for shared use</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Day Pass</h3>
+        <div class="price">$10</div>
+        <div class="duration">24 hours &bull; 5 accounts</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>Up to 5 accounts</li>
+        </ul>
+        <button onclick="openModal('service','day')">Get Access</button>
+      </div>
+      <div class="card">
+        <h3>Weekly</h3>
+        <div class="price">$40</div>
+        <div class="duration">7 days &bull; 5 accounts</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>Up to 5 accounts</li>
+        </ul>
+        <button onclick="openModal('service','week')">Get Access</button>
+      </div>
+      <div class="card popular">
+        <div class="popular-badge">Best Value</div>
+        <h3>Monthly</h3>
+        <div class="price">$120</div>
+        <div class="duration">30 days &bull; 5 accounts</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>Up to 5 accounts</li>
+        </ul>
+        <button onclick="openModal('service','month')">Get Access</button>
+      </div>
+      <div class="card">
+        <h3>3 Months</h3>
+        <div class="price">$250</div>
+        <div class="duration">90 days &bull; 5 accounts</div>
+        <ul class="card-features">
+          <li>AI answer generation</li>
+          <li>Auto-fill submissions</li>
+          <li>Up to 5 accounts</li>
+        </ul>
+        <button onclick="openModal('service','3month')">Get Access</button>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="card">
-    <h3>3 Months</h3>
-    <div class="price">$250</div>
-    <div class="duration">90 days &bull; 5 accounts</div>
-    <button onclick="openModal('service','3month')">Get Access</button>
+<hr class="divider" />
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-heading">Common questions</h2>
+  <p class="section-sub">Everything you need to know before getting started.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I install it?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Install the Tampermonkey browser extension, then add the Canvas Helper userscript. Once your license key is activated, the panel appears automatically on your Canvas pages.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What is a license key?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">A license key is a unique code (format: CH-XXXX-XXXX-XXXX-XXXX) that activates Canvas Helper for your account. It's emailed to you instantly after purchase and entered into the Canvas Helper panel.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Does it work on my school's Canvas?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Yes. Canvas Helper works with any Canvas LMS installation regardless of institution. If your school uses Canvas, it works.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What's the difference between Student and Service plans?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Student plans are for personal use on a single account. Service plans support up to 5 simultaneous accounts under one key — ideal for shared or multi-account use.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What if my key doesn't arrive?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Check your spam or junk folder first — emails occasionally land there. If you still don't see it after a few minutes, contact support with your payment receipt and we'll resend it immediately.</div>
+    </div>
   </div>
+</section>
 
-</div>
-
+<!-- FOOTER -->
 <footer>
-  &copy; 2026 Canvas Helper &mdash; Your key is emailed instantly after payment.
+  <p>&copy; 2026 Canvas Helper &mdash; Your key is emailed instantly after payment.</p>
 </footer>
 
 <!-- EMAIL MODAL -->
@@ -344,6 +899,13 @@
   const API = "https://canvas-helper-api-production.up.railway.app";
   let selectedType = null;
   let selectedTier = null;
+
+  function showPlan(plan, btn) {
+    document.querySelectorAll('.plan-section').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.plan-toggle button').forEach(el => el.classList.remove('active'));
+    document.getElementById('plan-' + plan).classList.add('active');
+    btn.classList.add('active');
+  }
 
   function openModal(type, tier) {
     selectedType = type;
@@ -365,6 +927,7 @@
     const btn = document.getElementById('checkout-btn');
 
     if (!email || !email.includes('@')) {
+      errorMsg.textContent = 'Please enter a valid email.';
       errorMsg.style.display = 'block';
       return;
     }
@@ -398,7 +961,11 @@
     }
   }
 
-  // Close modal on overlay click
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
   document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });

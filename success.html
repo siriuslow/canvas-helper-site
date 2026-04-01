@@ -4,75 +4,221 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payment Successful — Canvas Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222222;
+      --text: #ffffff;
+      --text-muted: #a0a0a0;
+      --text-faint: #555555;
+      --accent: #7c3aed;
+      --accent-light: #c4b5fd;
+      --btn-bg: #ffffff;
+      --btn-text: #0a0a0a;
+      --btn-hover: #e5e5e5;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #0d0d0d;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent-light); }
+
+    main {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 60px 20px;
     }
 
     .container {
       text-align: center;
-      padding: 40px 24px;
       max-width: 480px;
+      width: 100%;
     }
 
-    .checkmark {
-      font-size: 4rem;
-      margin-bottom: 20px;
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 28px;
     }
 
     h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(90deg, #7c3aed, #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
       margin-bottom: 16px;
     }
 
-    p {
-      color: #888;
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 12px;
+    .highlight {
+      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .highlight {
-      color: #c4b5fd;
+    .desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .steps-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 32px 0;
+      text-align: left;
+    }
+
+    .steps-box h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 18px;
+    }
+
+    .step-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .step-row:last-child { margin-bottom: 0; }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-text strong {
+      color: var(--text);
       font-weight: 600;
     }
 
     .back-btn {
       display: inline-block;
-      margin-top: 28px;
-      padding: 12px 28px;
-      background: #7c3aed;
-      color: #fff;
+      padding: 13px 28px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
       border-radius: 10px;
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.15s;
+      font-family: 'Inter', sans-serif;
     }
 
-    .back-btn:hover { background: #6d28d9; }
+    .back-btn:hover { background: var(--btn-hover); }
+
+    .spam-note {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 20px;
+      color: var(--text-faint);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
   </style>
 </head>
 <body>
+
+<nav>
+  <a href="/" class="nav-logo">Canvas<span>Helper</span></a>
+</nav>
+
+<main>
   <div class="container">
-    <div class="checkmark">✅</div>
-    <h1>Payment Successful!</h1>
-    <p>Your license key is on its way. <span class="highlight">Check your email</span> — it should arrive within a minute.</p>
-    <p>Paste the key into the Canvas Helper panel to activate your subscription.</p>
-    <p style="font-size:0.85rem; color:#555;">Didn't get an email? Check your spam folder or contact support.</p>
+    <div class="success-icon">✓</div>
+    <h1>Payment <span class="highlight">Successful!</span></h1>
+    <p class="desc">Your license key is on its way. <strong>Check your email</strong> — it should arrive within a minute.</p>
+
+    <div class="steps-box">
+      <h3>Next Steps</h3>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Check your inbox</strong> for an email from Canvas Helper with your license key.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Copy the key</strong> (format: CH-XXXX-XXXX-XXXX-XXXX) from the email.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Paste it</strong> into the Canvas Helper panel on any Canvas assignment page to activate.</div>
+      </div>
+    </div>
+
     <a href="/" class="back-btn">Back to Home</a>
+    <p class="spam-note">Didn't get an email? Check your spam folder or contact support.</p>
   </div>
+</main>
+
+<footer>
+  &copy; 2026 Canvas Helper
+</footer>
+
 </body>
 </html>
